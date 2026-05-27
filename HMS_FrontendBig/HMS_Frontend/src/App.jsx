@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import Dashboard from "./pages/Dashboard";
 import Patients from "./pages/Patients";
@@ -54,7 +54,17 @@ const PAGE_META = {
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
   const meta = PAGE_META[activeTab];
+
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  function toggleTheme() {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }
 
   return (
     <div className="app-container">
@@ -99,6 +109,14 @@ function App() {
           <div className="header-title-container">
             <h1>{meta.title}</h1>
             <p>{meta.subtitle}</p>
+          </div>
+          <div className="header-actions">
+            <button className="btn btn-secondary" onClick={() => setActiveTab("dashboard")}>
+              Home
+            </button>
+            <button className="btn btn-secondary" onClick={toggleTheme}>
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </button>
           </div>
         </div>
 

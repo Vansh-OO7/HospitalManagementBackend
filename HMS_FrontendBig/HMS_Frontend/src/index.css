@@ -37,6 +37,18 @@
   --radius-xl: 24px;
 }
 
+body[data-theme="light"] {
+  --bg-primary: #f4f7fb;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eef2f7;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --border-color: rgba(15, 23, 42, 0.12);
+  --border-focus: #4f46e5;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -120,6 +132,13 @@ body {
   background: linear-gradient(to right, #ffffff, var(--text-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+body[data-theme="light"] .logo-text {
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  color: var(--text-primary);
 }
 
 .logo-subtitle {
@@ -375,6 +394,13 @@ body {
   margin-top: 4px;
 }
 
+body[data-theme="light"] .stat-value,
+body[data-theme="light"] .activity-name,
+body[data-theme="light"] .modal-header h3,
+body[data-theme="light"] .header-title-container h1 {
+  color: var(--text-primary);
+}
+
 /* Dashboard Content Grid */
 .dashboard-grid {
   display: grid;
@@ -570,7 +596,7 @@ body {
 .form-input {
   background-color: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  color: white;
+  color: var(--text-primary);
   padding: 12px 16px;
   border-radius: var(--radius-md);
   font-size: 14px;
