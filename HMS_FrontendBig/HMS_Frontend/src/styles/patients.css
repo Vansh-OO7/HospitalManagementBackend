@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+  }
+  
+  .patients-page {
+    padding: 30px;
+  }
+  
+  .patient-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin-bottom: 30px;
+  }
+  
+  .patient-form input,
+  .patient-form textarea {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+  }
+  
+  .patient-form button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .patients-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .patient-card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+  }
+  
+  .patient-card button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: crimson;
+    color: white;
+    cursor: pointer;
+  }
