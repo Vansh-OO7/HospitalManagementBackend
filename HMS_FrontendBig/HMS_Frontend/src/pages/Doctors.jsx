@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { getDoctors, addDoctor, deleteDoctor } from "../services/doctorService";
 import { getPatients } from "../services/patientService";
 
@@ -111,7 +111,7 @@ function Doctors() {
                     {doctor.name.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2)}
                   </div>
                   <div>
-                    <h3 style={{ fontSize: 16, fontWeight: 700, color: "white" }}>{doctor.name}</h3>
+                    <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }}>{doctor.name}</h3>
                     <span className="activity-badge badge-indigo" style={{ fontSize: 11, padding: "2px 8px", marginTop: 4, display: "inline-block" }}>
                       {doctor.specialization}
                     </span>
@@ -121,11 +121,11 @@ function Doctors() {
                 <div style={{ borderTop: "1px solid var(--border-color)", borderBottom: "1px solid var(--border-color)", padding: "12px 0", display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span style={{ color: "var(--text-secondary)" }}>Email:</span>
-                    <span style={{ color: "white" }}>{doctor.email || "N/A"}</span>
+                    <span style={{ color: "var(--text-primary)" }}>{doctor.email || "N/A"}</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span style={{ color: "var(--text-secondary)" }}>Contact:</span>
-                    <span style={{ color: "white" }}>{doctor.contact || "N/A"}</span>
+                    <span style={{ color: "var(--text-primary)" }}>{doctor.contact || "N/A"}</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ color: "var(--text-secondary)" }}>Active Patients:</span>
@@ -221,3 +221,4 @@ function Doctors() {
 }
 
 export default Doctors;
+

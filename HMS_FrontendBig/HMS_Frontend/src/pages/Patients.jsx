@@ -151,7 +151,7 @@ function Patients() {
             <div key={patient.id} className="stat-card" style={{ flexDirection: "column", alignItems: "stretch", gap: 12, padding: 24, height: "100%" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div>
-                  <h3 style={{ fontSize: 18, fontWeight: 700, color: "white" }}>{patient.name}</h3>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--text-primary)" }}>{patient.name}</h3>
                   <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>
                     {patient.gender} · {patient.age} years old
                   </span>
@@ -367,4 +367,5 @@ function Patients() {
 }
 
 export default Patients;
+
 

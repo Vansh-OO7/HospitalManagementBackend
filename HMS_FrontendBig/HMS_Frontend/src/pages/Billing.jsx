@@ -137,7 +137,7 @@ function Billing() {
                 >
                   <td style={tdStyle}>{index + 1}</td>
                   <td style={tdStyle}>
-                    <span style={{ fontWeight: 600, color: "white" }}>{bill.patientName || `Patient #${bill.patientId}`}</span>
+                    <span style={{ fontWeight: 600, color: "var(--text-primary)" }}>{bill.patientName || `Patient #${bill.patientId}`}</span>
                   </td>
                   <td style={tdStyle}>
                     <span style={{ color: "var(--text-secondary)" }}>{bill.description || "—"}</span>
@@ -326,17 +326,17 @@ function Billing() {
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20, fontSize: 13 }}>
                 <div>
                   <div style={{ color: "var(--text-secondary)" }}>Invoice #</div>
-                  <div style={{ fontWeight: 700, color: "white" }}>{receiptBill.id}</div>
+                  <div style={{ fontWeight: 700, color: "var(--text-primary)" }}>{receiptBill.id}</div>
                 </div>
                 <div style={{ textAlign: "right" }}>
                   <div style={{ color: "var(--text-secondary)" }}>Date</div>
-                  <div style={{ fontWeight: 700, color: "white" }}>{formatDate(receiptBill.billDate)}</div>
+                  <div style={{ fontWeight: 700, color: "var(--text-primary)" }}>{formatDate(receiptBill.billDate)}</div>
                 </div>
               </div>
 
               <div style={{ marginBottom: 20 }}>
                 <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 4 }}>Billed To</div>
-                <div style={{ fontWeight: 700, fontSize: 16, color: "white" }}>{receiptBill.patientName || `Patient #${receiptBill.patientId}`}</div>
+                <div style={{ fontWeight: 700, fontSize: 16, color: "var(--text-primary)" }}>{receiptBill.patientName || `Patient #${receiptBill.patientId}`}</div>
               </div>
 
               {/* Line Items */}
@@ -442,5 +442,6 @@ const receiptRow = {
 };
 
 export default Billing;
+
 
 

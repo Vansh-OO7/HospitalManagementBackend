@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { getWards, addWard, deleteWard } from "../services/wardService";
 
 function Wards() {
@@ -89,7 +89,7 @@ function Wards() {
               <div key={ward.id} className="stat-card" style={{ flexDirection: "column", alignItems: "stretch", gap: 16, padding: 24 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                   <div>
-                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "white" }}>Ward {ward.wardNumber}</h3>
+                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--text-primary)" }}>Ward {ward.wardNumber}</h3>
                     <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>{ward.wardType}</span>
                   </div>
                   <button 
@@ -114,7 +114,7 @@ function Wards() {
 
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, borderTop: "1px solid var(--border-color)", paddingTop: 12 }}>
                   <span style={{ color: "var(--text-secondary)" }}>Daily Rate:</span>
-                  <span style={{ color: "white", fontWeight: 600 }}>${ward.dailyCharge.toFixed(2)}</span>
+                  <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>${ward.dailyCharge.toFixed(2)}</span>
                 </div>
               </div>
             );
@@ -194,3 +194,4 @@ function Wards() {
 }
 
 export default Wards;
+
