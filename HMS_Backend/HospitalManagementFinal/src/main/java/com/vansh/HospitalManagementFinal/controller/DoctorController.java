@@ -4,7 +4,9 @@ import com.vansh.HospitalManagementFinal.model.Doctor;
 import com.vansh.HospitalManagementFinal.repository.DoctorRepository;
 import com.vansh.HospitalManagementFinal.repository.PatientRepository;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class DoctorController {
                                @RequestBody Doctor updatedDoctor) {
 
         Doctor doctor = repository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor not found"));
 
         doctor.setName(updatedDoctor.getName());
         doctor.setSpecialization(updatedDoctor.getSpecialization());
@@ -62,6 +64,9 @@ public class DoctorController {
     @DeleteMapping("/{id}")
 
     public void deleteDoctor(@PathVariable Integer id) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor not found");
+        }
 
         patientRepository.clearAssignedDoctorId(id);
         repository.deleteById(id);

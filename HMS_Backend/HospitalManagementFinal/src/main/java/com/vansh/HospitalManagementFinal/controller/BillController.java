@@ -4,7 +4,9 @@ import com.vansh.HospitalManagementFinal.model.Bill;
 import com.vansh.HospitalManagementFinal.repository.BillRepository;
 import com.vansh.HospitalManagementFinal.repository.PatientRepository;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -107,6 +109,15 @@ public class BillController {
     }
 
     private void calculateAndSetFields(Bill bill) {
+        if (bill.getDaysAdmitted() < 0
+                || bill.getConsultationFee() < 0
+                || bill.getMedicationCost() < 0
+                || bill.getWardCharges() < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Billing values cannot be negative");
+        }
+        if (bill.getPatientId() == null || !patientRepository.existsById(bill.getPatientId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Valid patient is required");
+        }
         double total = bill.getConsultationFee()
                 + bill.getMedicationCost()
                 + (bill.getWardCharges() * bill.getDaysAdmitted());
@@ -143,7 +154,7 @@ public class BillController {
 
         Bill bill =
                 repository.findById(id)
-                        .orElseThrow();
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bill not found"));
 
         bill.setPatientId(
                 updatedBill.getPatientId()
@@ -187,6 +198,9 @@ public class BillController {
     public void deleteBill(
             @PathVariable Integer id
     ) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bill not found");
+        }
 
         repository.deleteById(id);
     }

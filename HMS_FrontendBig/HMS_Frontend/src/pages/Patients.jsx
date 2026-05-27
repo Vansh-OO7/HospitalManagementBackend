@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { getPatients, addPatient, deletePatient } from "../services/patientService";
 import { getDoctors } from "../services/doctorService";
 import { getWards } from "../services/wardService";
@@ -367,3 +367,4 @@ function Patients() {
 }
 
 export default Patients;
+

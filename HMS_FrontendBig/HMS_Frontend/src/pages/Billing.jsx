@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { getBills, addBill, deleteBill } from "../services/billService";
 import { getPatients } from "../services/patientService";
 
@@ -389,3 +389,5 @@ const receiptRow = {
 };
 
 export default Billing;
+
+

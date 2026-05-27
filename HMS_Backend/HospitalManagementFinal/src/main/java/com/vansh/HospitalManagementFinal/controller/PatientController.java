@@ -6,7 +6,9 @@ import com.vansh.HospitalManagementFinal.repository.DoctorRepository;
 import com.vansh.HospitalManagementFinal.repository.PatientRepository;
 import com.vansh.HospitalManagementFinal.repository.WardRepository;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -117,6 +119,15 @@ public class PatientController {
     public Patient addPatient(
             @RequestBody Patient patient
     ) {
+        if (patient.getName() == null || patient.getName().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient name is required");
+        }
+        if (patient.getAge() <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient age must be greater than zero");
+        }
+        if (patient.getGender() == null || patient.getGender().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient gender is required");
+        }
 
         return repository.save(patient);
     }
@@ -134,7 +145,7 @@ public class PatientController {
 
         Patient patient =
                 repository.findById(id)
-                        .orElseThrow();
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found"));
 
         patient.setName(
                 updatedPatient.getName()
@@ -172,15 +183,15 @@ public class PatientController {
     public void deletePatient(
             @PathVariable Integer id
     ) {
+        Patient patient = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found"));
 
-        repository.findById(id).ifPresent(patient -> {
-            if (patient.getAssignedWardId() != null) {
-                wardRepository.findById(patient.getAssignedWardId()).ifPresent(ward -> {
-                    ward.setOccupiedBeds(Math.max(0, ward.getOccupiedBeds() - 1));
-                    wardRepository.save(ward);
-                });
-            }
-            repository.deleteById(id);
-        });
+        if (patient.getAssignedWardId() != null) {
+            wardRepository.findById(patient.getAssignedWardId()).ifPresent(ward -> {
+                ward.setOccupiedBeds(Math.max(0, ward.getOccupiedBeds() - 1));
+                wardRepository.save(ward);
+            });
+        }
+        repository.deleteById(id);
     }
 }
