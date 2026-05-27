@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { getDashboardStats } from "../services/dashboardService";
 import { getPatients } from "../services/patientService";
 import { getWards } from "../services/wardService";
@@ -174,7 +174,7 @@ function Dashboard({ setActiveTab }) {
                   />
                 </svg>
                 <div style={{ position: "absolute", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <span style={{ fontSize: 32, fontWeight: 800, color: "white" }}>{occupancyRate}%</span>
+                  <span style={{ fontSize: 32, fontWeight: 800, color: "var(--text-primary)" }}>{occupancyRate}%</span>
                   <span style={{ fontSize: 11, color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 700 }}>Occupancy</span>
                 </div>
               </div>
@@ -191,7 +191,7 @@ function Dashboard({ setActiveTab }) {
                 <div style={{ width: 1, backgroundColor: "var(--border-color)" }} />
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                   <span style={{ fontSize: 13, color: "var(--text-secondary)" }}>Total Capacity</span>
-                  <span style={{ fontSize: 16, fontWeight: 700, color: "white" }}>{stats.totalBeds}</span>
+                  <span style={{ fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }}>{stats.totalBeds}</span>
                 </div>
               </div>
             </div>
@@ -218,3 +218,4 @@ function Dashboard({ setActiveTab }) {
 }
 
 export default Dashboard;
+

@@ -7,6 +7,7 @@ function Billing() {
   const [patients, setPatients] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [receiptBill, setReceiptBill] = useState(null);
+  const [paymentBill, setPaymentBill] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const [newBill, setNewBill] = useState({
@@ -159,6 +160,14 @@ function Billing() {
                         title="View Receipt"
                       >
                         Receipt
+                      </button>
+                      <button
+                        className="btn btn-primary"
+                        style={{ padding: "4px 10px", fontSize: 12 }}
+                        onClick={() => setPaymentBill(bill)}
+                        title="Pay Invoice"
+                      >
+                        Pay
                       </button>
                       <button
                         className="btn btn-danger"
@@ -356,6 +365,50 @@ function Billing() {
               <button className="btn btn-secondary" onClick={() => setReceiptBill(null)}>Close</button>
               <button className="btn btn-primary" onClick={() => window.print()}>
                 Print Receipt
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {paymentBill && (
+        <div className="modal-overlay">
+          <div className="modal-content" style={{ maxWidth: 520 }}>
+            <div className="modal-header">
+              <h3>Pay Invoice #{paymentBill.id}</h3>
+              <button className="modal-close" onClick={() => setPaymentBill(null)}>&times;</button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ textAlign: "center" }}>
+                <p style={{ color: "var(--text-secondary)", marginBottom: 10 }}>
+                  Scan this QR to pay
+                </p>
+                <img
+                  alt="Payment QR"
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(
+                    `upi://pay?pa=hospital@upi&pn=Hospital%20Management&am=${(paymentBill.totalAmount || 0).toFixed(2)}&cu=INR&tn=Invoice-${paymentBill.id}`
+                  )}`}
+                  style={{ width: 220, height: 220, borderRadius: 8, border: "1px solid var(--border-color)", background: "#fff", padding: 8 }}
+                />
+              </div>
+              <div style={{ background: "var(--bg-tertiary)", border: "1px solid var(--border-color)", borderRadius: 10, padding: 12, fontSize: 13 }}>
+                <div>Patient: <strong>{paymentBill.patientName || `Patient #${paymentBill.patientId}`}</strong></div>
+                <div>Amount: <strong>${(paymentBill.totalAmount || 0).toFixed(2)}</strong></div>
+              </div>
+            </div>
+            <div className="modal-actions">
+              <a
+                className="btn btn-secondary"
+                href={`https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(
+                  `upi://pay?pa=hospital@upi&pn=Hospital%20Management&am=${(paymentBill.totalAmount || 0).toFixed(2)}&cu=INR&tn=Invoice-${paymentBill.id}`
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Download QR
+              </a>
+              <button className="btn btn-primary" onClick={() => setPaymentBill(null)}>
+                Done
               </button>
             </div>
           </div>

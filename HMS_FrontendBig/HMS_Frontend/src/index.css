@@ -267,6 +267,23 @@ body[data-theme="light"] .logo-text {
   gap: 12px;
 }
 
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: var(--bg-tertiary);
+}
+
 /* Premium Buttons */
 .btn {
   display: inline-flex;
