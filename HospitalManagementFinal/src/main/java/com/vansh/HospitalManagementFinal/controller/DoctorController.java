@@ -2,6 +2,7 @@ package com.vansh.HospitalManagementFinal.controller;
 
 import com.vansh.HospitalManagementFinal.model.Doctor;
 import com.vansh.HospitalManagementFinal.repository.DoctorRepository;
+import com.vansh.HospitalManagementFinal.repository.PatientRepository;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,12 @@ import java.util.List;
 public class DoctorController {
 
     private final DoctorRepository repository;
+    private final PatientRepository patientRepository;
 
-    public DoctorController(DoctorRepository repository) {
+    public DoctorController(DoctorRepository repository, PatientRepository patientRepository) {
 
         this.repository = repository;
+        this.patientRepository = patientRepository;
     }
 
     // GET ALL DOCTORS
@@ -60,6 +63,7 @@ public class DoctorController {
 
     public void deleteDoctor(@PathVariable Integer id) {
 
+        patientRepository.clearAssignedDoctorId(id);
         repository.deleteById(id);
     }
 }

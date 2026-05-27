@@ -106,6 +106,16 @@ public class BillController {
                 .collect(Collectors.toList());
     }
 
+    private void calculateAndSetFields(Bill bill) {
+        double total = bill.getConsultationFee()
+                + bill.getMedicationCost()
+                + (bill.getWardCharges() * bill.getDaysAdmitted());
+        bill.setTotalAmount(total);
+        if (bill.getBillDate() == null) {
+            bill.setBillDate(new java.sql.Timestamp(System.currentTimeMillis()));
+        }
+    }
+
     // =========================
     // ADD BILL
     // =========================
@@ -116,6 +126,7 @@ public class BillController {
             @RequestBody Bill bill
     ) {
 
+        calculateAndSetFields(bill);
         return repository.save(bill);
     }
 
@@ -158,13 +169,11 @@ public class BillController {
                 updatedBill.getDescription()
         );
 
-        bill.setTotalAmount(
-                updatedBill.getTotalAmount()
-        );
-
         bill.setBillDate(
                 updatedBill.getBillDate()
         );
+
+        calculateAndSetFields(bill);
 
         return repository.save(bill);
     }

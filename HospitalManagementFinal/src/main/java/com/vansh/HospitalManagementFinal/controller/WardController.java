@@ -1,6 +1,7 @@
 package com.vansh.HospitalManagementFinal.controller;
 
 import com.vansh.HospitalManagementFinal.model.Ward;
+import com.vansh.HospitalManagementFinal.repository.PatientRepository;
 import com.vansh.HospitalManagementFinal.repository.WardRepository;
 
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,12 @@ import java.util.List;
 public class WardController {
 
     private final WardRepository repository;
+    private final PatientRepository patientRepository;
 
-    public WardController(WardRepository repository) {
+    public WardController(WardRepository repository, PatientRepository patientRepository) {
 
         this.repository = repository;
+        this.patientRepository = patientRepository;
     }
 
     @GetMapping
@@ -52,6 +55,7 @@ public class WardController {
 
     public void deleteWard(@PathVariable Integer id) {
 
+        patientRepository.clearAssignedWardId(id);
         repository.deleteById(id);
     }
 }

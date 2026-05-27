@@ -32,8 +32,21 @@ public class AssignmentController {
     public Patient assignWard(@RequestParam Integer patientId,
                               @RequestParam Integer wardId) {
         Patient patient = patientRepository.findById(patientId).orElseThrow();
-        Ward ward = wardRepository.findById(wardId).orElseThrow();
+        
+        // If patient is already assigned to this ward, do nothing
+        if (wardId.equals(patient.getAssignedWardId())) {
+            return patient;
+        }
 
+        // If patient was assigned to a different ward, decrement that ward's occupied beds
+        if (patient.getAssignedWardId() != null) {
+            wardRepository.findById(patient.getAssignedWardId()).ifPresent(oldWard -> {
+                oldWard.setOccupiedBeds(Math.max(0, oldWard.getOccupiedBeds() - 1));
+                wardRepository.save(oldWard);
+            });
+        }
+
+        Ward ward = wardRepository.findById(wardId).orElseThrow();
         if (ward.getOccupiedBeds() < ward.getCapacity()) {
             patient.setAssignedWardId(wardId);
             ward.setOccupiedBeds(ward.getOccupiedBeds() + 1);
@@ -48,9 +61,10 @@ public class AssignmentController {
         Patient patient = patientRepository.findById(patientId).orElseThrow();
 
         if (patient.getAssignedWardId() != null) {
-            Ward ward = wardRepository.findById(patient.getAssignedWardId()).orElseThrow();
-            ward.setOccupiedBeds(Math.max(0, ward.getOccupiedBeds() - 1));
-            wardRepository.save(ward);
+            wardRepository.findById(patient.getAssignedWardId()).ifPresent(ward -> {
+                ward.setOccupiedBeds(Math.max(0, ward.getOccupiedBeds() - 1));
+                wardRepository.save(ward);
+            });
         }
 
         patient.setAssignedDoctorId(null);

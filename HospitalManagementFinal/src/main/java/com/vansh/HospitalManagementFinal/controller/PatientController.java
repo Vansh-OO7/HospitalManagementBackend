@@ -173,6 +173,14 @@ public class PatientController {
             @PathVariable Integer id
     ) {
 
-        repository.deleteById(id);
+        repository.findById(id).ifPresent(patient -> {
+            if (patient.getAssignedWardId() != null) {
+                wardRepository.findById(patient.getAssignedWardId()).ifPresent(ward -> {
+                    ward.setOccupiedBeds(Math.max(0, ward.getOccupiedBeds() - 1));
+                    wardRepository.save(ward);
+                });
+            }
+            repository.deleteById(id);
+        });
     }
 }
